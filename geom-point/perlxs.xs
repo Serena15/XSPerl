@@ -307,8 +307,6 @@ SV * crosspoint_circlestruct(point, circle)
 	}
 	else {
 		printf("The solving is absent(D < 0)\n");
-		hv_store(rh, "x", 1, newSViv(undef), 0);
-    	    	hv_store(rh, "y", 1, newSViv(undef), 0);
 	}
 	}
     }
