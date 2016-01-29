@@ -271,7 +271,7 @@ SV * crosspoint_circlestruct(point, circle)
             k = (point->y-circle->y)/(point->x-circle->x);
 	    double b = point->y - (point->x)*k;
             double diskr = pow(k*b-k*(circle->y)-circle->x,2) - (1 + k*k)*(pow(circle->x,2) + b*b + pow(circle->y,2) - 2*b*(circle->y) - pow(circle->r,2));
-        if(diskr) {
+        if(diskr > 0) {
 		x_our = (-k*b+k*(circle->y)+circle->x + sqrt(diskr))/(1 + k*k);
 		y_our = k*x_our+b;
 		x_our2 = (-k*b+k*(circle->y)+circle->x - sqrt(diskr))/(1 + k*k);
@@ -299,11 +299,16 @@ SV * crosspoint_circlestruct(point, circle)
 	    		}	    
 		}
 	}
-	else {
+	else if (diskr == 0){
 	    x_our = (-k*b+k*(circle->y)+circle->x + sqrt(diskr))/(1 + k*k);
 	    y_our = k*x_our+b;
 	    hv_store(rh, "x", 1, newSViv(x_our), 0);
     	    hv_store(rh, "y", 1, newSViv(y_our), 0);
+	}
+	else {
+		printf("The solving is absent(D < 0)\n");
+		hv_store(rh, "x", 1, newSViv(undef), 0);
+    	    	hv_store(rh, "y", 1, newSViv(undef), 0);
 	}
 	}
     }
